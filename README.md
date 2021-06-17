@@ -41,29 +41,78 @@ $ mv ffmpeg-git-*-amd64-static/{ffmpeg,ffprobe} bin
 
 We store our files in the [`gulpio2`](https://github.com/willprice/GulpIO2) format.
 
-1. Download (p01 frames?) [epic-kitchens-100](https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m)
+1. Download p01 frames from [epic-kitchens-100](https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m)
 
-can download easier with the download script we provide
+    You can either do this manually or use the included script (the script uses the [epic-downloader](https://github.com/epic-kitchens/epic-kitchens-download-scripts) which downloads the `.tar` files from the direct download link, download speeds for this may be (very) slow depending on the region, in which case we recommend to download using Academic Torrents, find out more [here](https://github.com/epic-kitchens/epic-kitchens-download-scripts#download-speed))
 
-```bash
-$ cd datasets
-$ bash ./download_p01_frames.sh
-```
-2. Gulp the dataset (we supply a labels pkl for just p01) (RGB P01 FRAMES ONLY)
+    ```bash
+    $ cd datasets
+    $ bash ./download_p01_frames.sh
+    ```
+2. Extract the frames, if you downloaded the frames using the script above, then simply run
+    ```bash
+    $ cd datasets
+    $ bash ./extract_p01_frames.sh
+    ```
+    
+    or if you downloaded them externally then simply run the same script with the directory of the `/P01` folder as an argument
+    ```bash
+    $ cd datasets
+    $ bash ./extract_p01_frames.sh <path-to-downloaded-rgb-frames>/P01/
+    ```
+    
+    once extracted, make sure that you have them all extracted correctly:
+    
+    ```bash
+    $ cd <path-to-rgb-frames>/P01
+    $ tree -hd
+    .
+    ├── [3.9M]  P01_01
+    ├── [1.1M]  P01_02
+    ├── [272K]  P01_03
+    ├── [256K]  P01_04
+    ├── [3.0M]  P01_05
+    ├── [1.1M]  P01_06
+    ├── [412K]  P01_07
+    ├── [248K]  P01_08
+    ├── [8.2M]  P01_09
+    ├── [320K]  P01_10
+    ├── [3.6M]  P01_101
+    ├── [520K]  P01_102
+    ├── [364K]  P01_103
+    ├── [500K]  P01_104
+    ├── [4.1M]  P01_105
+    ├── [1.4M]  P01_106
+    ├── [252K]  P01_107
+    ├── [268K]  P01_108
+    ├── [10.0M]  P01_109
+    ├── [1.2M]  P01_11
+    ├── [456K]  P01_12
+    ├── [240K]  P01_13
+    ├── [3.2M]  P01_14
+    ├── [2.1M]  P01_15
+    ├── [460K]  P01_16
+    ├── [2.6M]  P01_17
+    ├── [8.4M]  P01_18
+    └── [1.1M]  P01_19
 
-```bash
-$ python src/scripts/gulp_data \
-    /path/to/rgb/frames (datasets/epic-100/p01-frames) \
-    datasets/epic-100/gulp \
-    p01.pkl (or datasets/epic-100/labels/p01.pkl) \
-    rgb
-```
+    28 directories
+    ```
+4. Gulp the dataset (we supply a labels pkl for just p01) (RGB P01 FRAMES ONLY)
 
-If you need to write the gulp directory to somewhere other than the path specified in the command above, make sure to symlink it afterwards to datasets/epic-100/gulp/train so the configuration files don't need to be updated.
+    ```bash
+    $ python src/scripts/gulp_data \
+        /path/to/rgb/frames (datasets/epic-100/frames) \
+        datasets/epic-100/gulp \
+        datasets/epic-100/labels/p01.pkl \
+        rgb
+    ```
 
-```bash
-$ ln -s /path/to/gulp/directory datasets/epic-100/gulp/train
-```
+    If you need to write the gulp directory to somewhere other than the path specified in the command above, make sure to symlink it afterwards to datasets/epic-100/gulp/train so the configuration files don't need to be updated.
+
+    ```bash
+    $ ln -s /path/to/gulp/directory datasets/epic-100/gulp/train
+    ```
 
 ## Models
 
@@ -154,11 +203,11 @@ Regardless of whether your model supports variable-length inputs or not, we need
 
 ```bash
 $ python src/scripts/compute_verb_class_priors.py \
-    p01.pkl \
+    datasets/epic-100/labels/p01.pkl \
     datasets/epic-100/labels/verb_class_priors.csv
 
 $ python src/scripts/compute_noun_class_priors.py \
-    p01.pkl \
+    datasets/epic-100/labels/p01.pkl \
     datasets/epic-100/labels/noun_class_priors.csv
 ```
 
@@ -180,9 +229,11 @@ $ python src/scripts/compute_esvs.py \
     --sample_n_frames 8
 ```
 
-## Visualisation
+# Visualisation
 
 We provide a dashboard to investigate model behaviour when we vary how many frames are fed to the model. This dashboard is powered by multiple sets of results produced by the `compute_esvs.py` script
+
+## Computing multi-frame ESVs
 
 First compute ESVs for 1-8 frame inputs:
 
@@ -208,4 +259,10 @@ $ python src/scripts/collate_esvs.py
     datasets/epic-100/esvs/mtrn-esv-min_frames=1-max_frames=8.pkl
 ```
 
+## Dumping video files
+
 before we can run the dashboard, we need to dump out the videos from the gulp directory as webm files (since we gulp the files, it alters the FPS). Watch out that you don't end up using the conda bundled ffmpeg which doesn't support VP9 encoding if you replace `.bin/ffmpeg` with `ffmpeg`, check which you are using by running `which ffmpeg`
+
+## Extracting verb-noun links
+
+## Running the dashboard

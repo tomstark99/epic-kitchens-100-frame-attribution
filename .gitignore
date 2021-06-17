@@ -222,9 +222,5 @@ fabric.properties
 *.pkl
 *.pt
 /notebooks/data/*
-/datasets/epic-100/esvs/*
-/datasets/epic-100/features/*
-/datasets/epic-100/gulp/*
-/datasets/epic-100/labels/*
-/datasets/epic-100/models/*
-/datasets/epic-100/runs/*
+/datasets/epic-100/*/*
+!/datasets/epic-100/*/.*

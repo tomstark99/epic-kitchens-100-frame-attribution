@@ -8,8 +8,24 @@ We break down a model’s class score into the sum of contributions from each fr
 
 ## Environment
 
+You will always need to set your PYTHONPATH to include the `src` folder. We provide an `.envrc` for use with [`direnv`](https://direnv.net/) which will automatically do that for you when you `cd` into the project directory. Alternatively just run:
+
+```bash
+$ export PYTHONPATH=$PWD/src 
+```
+
+Create a conda environment with the environment file, you will also always need to activate this environment to use the correct packages
+
 ```bash
 $ conda env create -n epic-100 -f environment.yml
+$ conda activate epic-100
+```
+
+Alternatively, just add it to the `.envrc` file which will run it automatically:
+
+```bash
+$ echo conda activate epic-100 >> .envrc
+$ direnv allow
 ```
 
 You will also need to install a version of ffmpeg with vp9 support, we suggest using the static builds provided by John Van Sickle:
@@ -19,12 +35,6 @@ $ wget "https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz"
 $ tar -xvf "ffmpeg-git-amd64-static.tar.xz"
 $ mkdir -p bin
 $ mv ffmpeg-git-*-amd64-static/{ffmpeg,ffprobe} bin
-```
-
-You will always need to set your PYTHONPATH to include the `src` folder. We provide an `.envrc` for use with [`direnv`](https://direnv.net/) which will automatically do that for you when you `cd` into the project directory. Alternatively just run:
-
-```bash
-$ export PYTHONPATH=$PWD/src 
 ```
 
 ## Data

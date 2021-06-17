@@ -181,17 +181,14 @@ $ bash ./train_verb_noun.sh 200
 
 ## Additional arguments
 
-`--val_features_pkl` If you want to train / test on two distinct frame feature sets rather than using a train/test split
-
-`--train-test-split` Specify a train/test split between 0 and 1, default 0.3
-
-`--min-frames` Minimum number of frames to train models for, default 1
-
-`--max-frames` Maximum number of frames to train models for, default 8 (these two arguments can also be used in case of a training crash)
-
-`--epoch` How many iterations to train the models for, default 200
-
-`--batch-size` The size of the mini batches to feed to the model at a time, default 512
+| Argument | Description | Default |
+| - | - | - |
+| `--val_features_pkl` | If you want to train / test on two distinct frame feature sets rather than using a train/test split | `None` |
+| `--train-test-split` | Specify a train/test split between 0 and 1 | 0.3 |
+| `--min-frames` | Minimum number of frames to train models for | 1 |
+| `--max-frames` | Maximum number of frames to train models for (these two arguments can also be used in case of a training crash) | 8 |
+| `--epoch`| How many iterations to train the models for | 200 |
+| `--batch-size` | The size of the mini batches to feed to the model at a time | 512 |
 
 # Computing ESVs
 

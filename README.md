@@ -24,7 +24,7 @@ $ conda activate epic-100
 Alternatively, just add it to the `.envrc` file which will run it automatically:
 
 ```bash
-$ echo conda activate epic-100 >> .envrc
+$ echo 'conda activate epic-100' | cat - .envrc > temp && mv temp .envrc
 $ direnv allow
 ```
 

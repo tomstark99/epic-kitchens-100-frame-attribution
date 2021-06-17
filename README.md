@@ -62,7 +62,7 @@ We provide TRN model pretrained on the training set of EPIC-KITCHENS-100
 
 ```bash
 $ cd checkpoints
-$ ./download.sh (should wget https://www.dropbox.com/s/l1cs7kozz3f03r4/trn_rgb.ckpt?dl=1)
+$ bash ./download.sh (should wget https://www.dropbox.com/s/l1cs7kozz3f03r4/trn_rgb.ckpt?dl=1)
 ```
 
 check that it has downloaded:
@@ -70,7 +70,7 @@ check that it has downloaded:
 ```bash
 $ tree -h
 .
-├── [ 584]  download.sh
+├── [ 150]  download.sh
 └── [103M]  trn_rgb.ckpt
 
 0 directories, 2 files
@@ -89,11 +89,51 @@ $ python src/scripts/extract_features.py \
     datasets/epic-100/features/p01_features.pkl
 ```
 
-optionally you can change the number of workers for the PyTorch DataLoader with the `--num_workers` argument
+optionally you can change the number of workers for the PyTorch DataLoader with the `--num_workers` argument. If this script failes at any point then you can simply rerun and it will continue from where it crashed.
 
 # Training MTRN models
 
+We train an MLP classifier for each 1-8 frame inputs which passes the concatenated frame features as inputs through two fully connected layers to give predictions for the verb / noun classes.
 
+We use tensorboard to log extensive training results which you can view either throughout the training or afterwards at any point, run
+
+```bash
+$ tensorboard --logdir=datasets/epic-100/runs --reload_multifile True
+```
+
+In this example we train the verbs and the nouns separately although the framework is available to train both in the same neural network. For the selected learning rate `3e-4` and batch size `512` the best testing accuracy was observed when training for 200 epochs. You can run the scripts one by one
+
+```bash
+$ python src/scripts/train_mtrn.py \
+    datasets/epic-100/features/p01_features.pkl \
+    datasets/epic-100/models/ \
+    --type "verb"
+
+$ python src/scripts/train_mtrn.py \
+    datasets/epic-100/features/p01_features.pkl \
+    datasets/epic-100/models/ \
+    --type "noun"
+```
+
+Alternatively we provide a script that will run this automatically for you with an argument for the epochs
+
+```bash
+$ bash ./train_verb_noun.sh 200
+```
+
+## Additional arguments
+
+`--val_features_pkl` If you want to train / test on two distinct frame feature sets rather than using a train/test split
+
+`--train-test-split` Specify a train/test split between 0 and 1, default 0.3
+
+`--min-frames` Minimum number of frames to train models for, default 1
+
+`--max-frames` Maximum number of frames to train models for, default 8 (these two arguments can also be used in case of a training crash)
+
+`--epoch` How many iterations to train the models for, default 200
+
+`--batch-size` The size of the mini batches to feed to the model at a time, default 512
 
 # Computing ESVs
 

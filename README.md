@@ -21,7 +21,7 @@ $ mkdir -p bin
 $ mv ffmpeg-git-*-amd64-static/{ffmpeg,ffprobe} bin
 ```
 
-You will always need to set your PYTHONPATH to include the `src` folder. We provide an `.envrc` for use with `direnv` (needs link) which will automatically do that for you when you `cd` into the project directory. Alternatively just run:
+You will always need to set your PYTHONPATH to include the `src` folder. We provide an `.envrc` for use with [`direnv`](https://direnv.net/) which will automatically do that for you when you `cd` into the project directory. Alternatively just run:
 
 ```bash
 $ export PYTHONPATH=$PWD/src 
@@ -29,7 +29,7 @@ $ export PYTHONPATH=$PWD/src
 
 ## Data
 
-We store our files in the `gulpio2` (needs link) format.
+We store our files in the [`gulpio2`](https://github.com/willprice/GulpIO2) format.
 
 1. Download (p01 frames?) [epic-kitchens-100](https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m)
 
@@ -37,12 +37,11 @@ can download easier with the download script we provide
 
 ```bash
 $ cd datasets
-$ ./download_p01_frames.sh
+$ bash ./download_p01_frames.sh
 ```
 2. Gulp the dataset (we supply a labels pkl for just p01) (RGB P01 FRAMES ONLY)
 
 ```bash
-(MOVE gulp_data.py TO src/scripts)
 $ python src/scripts/gulp_data \
     /path/to/rgb/frames (datasets/epic-100/p01-frames) \
     datasets/epic-100/gulp \
@@ -62,7 +61,7 @@ We provide TRN model pretrained on the training set of EPIC-KITCHENS-100
 
 ```bash
 $ cd checkpoints
-$ bash ./download.sh (should wget https://www.dropbox.com/s/l1cs7kozz3f03r4/trn_rgb.ckpt?dl=1)
+$ bash ./download_checkpoints.sh
 ```
 
 check that it has downloaded:

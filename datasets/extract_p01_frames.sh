@@ -1,6 +1,10 @@
 #!/bin/bash
 
-cd epic-100/frames/P01
+if [ -z "$1" ] then
+    cd epic-100/frames/P01
+else
+    cd $1
+fi
 for f in *.tar; do 
     d="$f"
     d_arr=(${d//./ })
@@ -9,4 +13,3 @@ for f in *.tar; do
     (tar -xf "$f" -C "$d_name")
 done
 rm *.tar
-cd ../../..

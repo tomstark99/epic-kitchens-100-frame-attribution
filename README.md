@@ -340,7 +340,7 @@ If you wish to just explore the dashboard you can download and extract the relev
 $ bash ./download_dashboard_files.sh
 ```
 
-Make sure you have followed the setup process and have the `epic-100` conda environment active, note you will also have to have the p01 frames downloaded by following the [data](#data) section and then the [dumping frames][#dumping-frames-and-encoding-videos] section before running:
+Make sure you have followed the setup process and have the `epic-100` conda environment active, note you will also have to have the p01 frames downloaded by following the [data](#data) section and then the [dumping frames](#dumping-frames-and-encoding-videos) section before running:
 
 ```bash
 $ bash ./dashboard.sh <200/2000> <path-to-dumped-video-frames>

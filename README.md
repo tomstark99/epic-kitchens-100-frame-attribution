@@ -210,18 +210,20 @@ $ python src/scripts/compute_noun_class_priors.py \
 
 ## Models supporting a fixed-length input (e.g. TRN)
 
-For models that don't support a variable-length
+For models that don't support a variable-length input, we propose a way of ensembling a collection of fixed-length input models inot a new meta-model which we can compute ESVs for. To make this explanation more concrete, we now describe the process in detail for TRN. 
 
-This is implemented in the OnlineShapleyAttributor class.
+To start with, we train multiple TRN models for 1, 2, ..., n frames separately. By training these models separately we ensure that they are capable of acting alone (this also has the nice benefit of improving performance over joint training in our experience!). At inference time, we compute all possible subsampled variants of the input video we wish to classify and pass each of these through the corresponding single scale model. We aggregate scores for verbs/nouns so that each scale is given equal weighting in the final result.
 
-We provide an example of how to do this for TRN, as the basic variant only supports a fixed-length input. (make sure you've set up your environment, downloaded and prepped the dataset, downloaded the models and extracted the features first)
+This is implemented in the [`OnlineShapleyAttributor`](src/attribution/online_shapley_value_attributor.py#L17) class taken from [play-fair](https://github.com/willprice/play-fair).
+
+We provide an example of how to do this for TRN, as the basic variant only supports a fixed-length input. (make sure you've set up your environment, downloaded and prepped the dataset, downloaded the models, extracted the features and trained for 1 .. n verb and noun models first)
 
 ```bash
 $ python src/scripts/compute_esvs.py \
     datasets/epic-100/features/p01_features.pkl \
-    datasets/epic-100/models/
+    datasets/epic-100/models/ (path where all models for all frames for verbs and nouns are located) \
     datasets/epic-100/labels/verb_class_priors.csv \
-    datasets/epic-100/labels/verb_class_priors.csv \
+    datasets/epic-100/labels/noun_class_priors.csv \
     datasets/epic-100/esvs/mtrn-esv-n_frames=8.pkl \
     --sample_n_frames 8
 ```
@@ -261,5 +263,7 @@ $ python src/scripts/collate_esvs.py
 before we can run the dashboard, we need to dump out the videos from the gulp directory as webm files (since we gulp the files, it alters the FPS). Watch out that you don't end up using the conda bundled ffmpeg which doesn't support VP9 encoding if you replace `.bin/ffmpeg` with `ffmpeg`, check which you are using by running `which ffmpeg`
 
 ## Extracting verb-noun links
+
+while [play-fair](https://github.com/willprice/play-fair)
 
 ## Running the dashboard

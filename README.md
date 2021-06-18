@@ -113,6 +113,20 @@ We store our files in the [`gulpio2`](https://github.com/willprice/GulpIO2) form
     ```bash
     $ ln -s /path/to/gulp/directory datasets/epic-100/gulp/train
     ```
+5. Download the verb and noun class labels for epic-kitchens-100
+
+    ```bash
+    $ cd datasets/epic-100/labels
+    $ bash ./download_labels.sh
+    $ tree -h
+    .
+    ├── [ 362]  download_labels.sh
+    ├── [ 48K]  EPIC_100_noun_classes.csv
+    ├── [ 13K]  EPIC_100_verb_classes.csv
+    └── [818K]  p01.pkl
+
+    0 directories, 4 files
+    ```
 
 ## Models
 
@@ -288,7 +302,7 @@ $ mv datasets/epic-100/video_frames/*.webm datasets/epic-100/video_frames/videos
 
 ## Extracting verb-noun links
 
-while [play-fair](https://github.com/willprice/play-fair) for Something-Something-v2 only predicts a single class label, we are predicting a verb and a noun label separately. To make the dashboard easier to use we have to extract action sequence instances for all verb/noun combinations
+while [play-fair](https://github.com/willprice/play-fair) for Something-Something-v2 only predicts a single class label, we are predicting a verb and a noun label separately. To make the dashboard easier to use we have to extract action sequence instances for all verb/noun combinations:
 
 ```bash
 $ python src/scripts/extract_vert_noun_links.py \
@@ -320,5 +334,14 @@ Now we can run the dashboard
 ```bash
 $ python src/apps/esv_dashboard/visualise_esvs.py \
     mtrn-esv-min_n_frames\=1-max_n_frames\=8-epoch=200.pkl \
-    datasets/epic-100/video_frames datasets/epic/labels/EPIC_100_verb_classes.csv datasets/epic/labels/EPIC_100_noun_classes.csv datasets/epic/labels/
+    datasets/epic-100/video_frames \
+    datasets/epic/labels/EPIC_100_verb_classes.csv \
+    datasets/epic/labels/EPIC_100_noun_classes.csv \
+    datasets/epic/labels/
+```
+
+alternatively if you trained on different number of epochs or dumped the video frames to a different directory you can run the dashboard using the script:
+
+```bash
+$ bash ./dashboard.sh <epochs> <path-to-dumped-video-frames>
 ```

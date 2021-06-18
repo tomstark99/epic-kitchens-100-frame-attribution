@@ -17,7 +17,7 @@ parser.add_argument("verb_noun_pickle", type=Path, help="Path to pickle file to 
 parser.add_argument("verb_classes", type=Path, help="Path to verb classes csv")
 parser.add_argument("noun_classes", type=Path, help="Path to noun classes csv")
 parser.add_argument("--classes", type=bool, default=False, help="Extract as pure class numbers")
-parser.add_argument("--narration_id", type=bool, default=False, help="Extract with noun as tuple with narration_id")
+parser.add_argument("--narration-id", type=bool, default=False, help="Extract with noun as tuple with narration_id")
 
 def main(args):
 

@@ -225,3 +225,4 @@ fabric.properties
 /datasets/epic-100/*/*
 !/datasets/epic-100/*/.*
 !/datasets/epic-100/labels/p01.pkl
+!/datasets/epic-100/labels/EPIC_100_*_classes.csv

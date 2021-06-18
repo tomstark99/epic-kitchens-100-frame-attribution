@@ -224,3 +224,4 @@ fabric.properties
 /notebooks/data/*
 /datasets/epic-100/*/*
 !/datasets/epic-100/*/.*
+!/datasets/epic-100/labels/p01.pkl

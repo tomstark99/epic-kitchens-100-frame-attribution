@@ -258,7 +258,7 @@ $ python src/scripts/collate_esvs.py
     datasets/epic-100/esvs/mtrn-esv-min_frames=1-max_frames=8.pkl
 ```
 
-## Dumping video files
+## Dumping frames and encoding videos
 
 before we can run the dashboard, we need to dump out the videos from the gulp directory as webm files (since we gulp the files, it alters the FPS). Watch out that you don't end up using the conda bundled ffmpeg which doesn't support VP9 encoding if you replace `.bin/ffmpeg` with `ffmpeg`, check which you are using by running `which ffmpeg`
 
@@ -330,4 +330,18 @@ alternatively if you trained on different number of epochs or dumped the video f
 
 ```bash
 $ bash ./dashboard.sh <epochs> <path-to-dumped-video-frames>
+```
+
+## Run dashboard without prior computation
+
+If you wish to just explore the dashboard you can download and extract the relevant files:
+
+```bash
+$ bash ./download_dashboard_files.sh
+```
+
+Make sure you have followed the setup process and have the `epic-100` conda environment active, note you will also have to have the p01 frames downloaded by following the [data](#data) section and then the [dumping frames][#dumping-frames-and-encoding-videos] section before running:
+
+```bash
+$ bash ./dashboard.sh <200/2000> <path-to-dumped-video-frames>
 ```

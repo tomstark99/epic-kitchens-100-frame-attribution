@@ -21,7 +21,7 @@ $ conda env create -n epic-100 -f environment.yml
 $ conda activate epic-100
 ```
 
-Alternatively, just add it to the `.envrc` file which will run it automatically:
+Alternatively, just add it to the `.envrc` file which will run it automatically (be careful that you have set the source of your conda installation either in your .bashrc file or also by adding it to the top of the `.envrc` file)
 
 ```bash
 $ echo 'conda activate epic-100' | cat - .envrc > temp && mv temp .envrc

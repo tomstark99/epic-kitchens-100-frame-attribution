@@ -1,8 +1,10 @@
 # Play Fair for epic-kitchens-100: Frame Attribution in Video Models
 
-This repo introduces an attribution method for explaining action recognition models. Such models fuse information from multiple frames within a video, through score aggregation or relational reasoning. 
+This repo extends the attribution method from [play-fair](https://github.com/willprice/play-fair) for explaining action recognition models with the epic-kitchens-100 dataset. Such models fuse information from multiple frames within a video, through score aggregation or relational reasoning. 
 
 We break down a model’s class score into the sum of contributions from each frame, fairly. Our method adapts an axiomatic solution to fair reward distribution in cooperative games, known as the Shapley value, for elements in a variable-length sequence, which we call the Element Shapley Value (ESV). Critically, we propose a tractable approximation of ESV that scales linearly with the number of frames in the sequence.
+
+If you want to explore further follow the set up guide below, extract features from the backbone models, and compute ESVs yourself.
 
 # Setup
 

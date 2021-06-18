@@ -113,20 +113,6 @@ We store our files in the [`gulpio2`](https://github.com/willprice/GulpIO2) form
     ```bash
     $ ln -s /path/to/gulp/directory datasets/epic-100/gulp/train
     ```
-5. Download the verb and noun class labels for epic-kitchens-100
-
-    ```bash
-    $ cd datasets/epic-100/labels
-    $ bash ./download_labels.sh
-    $ tree -h
-    .
-    ├── [ 362]  download_labels.sh
-    ├── [ 48K]  EPIC_100_noun_classes.csv
-    ├── [ 13K]  EPIC_100_verb_classes.csv
-    └── [818K]  p01.pkl
-
-    0 directories, 4 files
-    ```
 
 ## Models
 

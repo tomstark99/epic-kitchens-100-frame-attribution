@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [ -z "$1" ] then
+if [ -z "$1" ]
+then
     cd epic-100/frames/P01
 else
     cd $1

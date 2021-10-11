@@ -6,7 +6,8 @@ then
 else
     cd $1
 fi
-for f in *.tar; do 
+for f in *.tar; do
+    echo extracting $f...
     d="$f"
     d_arr=(${d//./ })
     d_name=${d_arr[0]}
@@ -14,3 +15,4 @@ for f in *.tar; do
     (tar -xf "$f" -C "$d_name")
 done
 rm *.tar
+echo DONE
